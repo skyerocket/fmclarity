@@ -1,6 +1,13 @@
 const { ApolloServer, gql } = require('apollo-server-lambda');
 
 const typeDefs = gql`
+  input ContractorInput {
+    name: String!
+    telephone: String!
+    email: String!
+    services: [String]!
+  }
+
   type Query {
     contractors: [Contractor]
   }
@@ -10,6 +17,10 @@ const typeDefs = gql`
     telephone: String!
     email: String!
     services: [String]!
+  }
+
+  type Mutation {
+    addContractor(input: ContractorInput): Contractor
   }
 `;
 
