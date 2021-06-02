@@ -1,14 +1,15 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { gql, useMutation } from '@apollo/client';
 
 const AddContractorMutation = gql`
-  mutation add($name: String!, $email: String!, $telephone: String!) {
+  mutation add($name: String!, $email: String!, $telephone: String!, $services: [String!]!) {
     addContractor(
-      name: $name, email: $email, telephone: $telephone
+      name: $name, email: $email, telephone: $telephone, services: $services
     ) {
         name,
         email,
-        telephone
+        telephone,
+        services
       }
   }
 `
@@ -24,17 +25,17 @@ export default function AddContractor() {
   
   const onsubmit = event => {
     event.preventDefault();
-    console.log(nameInput.value, emailInput.value, telephoneInput.value)
+    console.log(nameInput.value, emailInput.value, telephoneInput.value, servicesInput.value.split(','))
     add({variables: {
       name: String(nameInput.value),
       email: String(emailInput.value),
       telephone: String(telephoneInput.value),
-      // services: [String(servicesInput.value), 'just to show this is a list']
+      services: servicesInput.value.split(',')
     }})
     nameInput.value = '';
     emailInput.value = '';
     telephoneInput.value = '';
-    // servicesInput.value = '';
+    servicesInput.value = '';
   }
 
   return (
@@ -51,10 +52,10 @@ export default function AddContractor() {
         Telephone:
         <input ref={node => {telephoneInput = node}} type="text" name="telephone" />
       </label>
-      {/* <label>
+      <label>
         Services:
-        <input ref={node => {servicesInput = node}} type="text" name="services" />
-      </label> */}
+        <input ref={node => {servicesInput = node}} placeholder="seperate services by comma ," type="text" name="services" />
+      </label>
       <input type="submit" disabled={loading} value="Add Contractor" />
     </form>
   );

@@ -8,13 +8,15 @@ const typeDefs = gql`
   type Contractor {
     name: String!
     telephone: String!
-    email: String!
+    email: String!,
+    services: [String!]!
   }
 
   type Mutation {
     addContractor(name: String!,
         telephone: String!,
         email: String!,
+        services: [String!]!
         ): Contractor
   }
 `;
@@ -44,7 +46,7 @@ const resolvers = {
         name: args.name,
         telephone: args.telephone,
         email: args.email,
-        // services: args.services
+        services: args.services
       }
       contractors.push(contractor)
       return contractor

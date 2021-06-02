@@ -9,6 +9,7 @@ const QUERY = gql`
             name
             email
             telephone
+            services
         }
     }
 `
@@ -34,7 +35,7 @@ export default function Contractors() {
             <h3>{contractor.name}</h3>
             <p>{contractor.email}</p>
             <p>{contractor.telephone}</p>
-            {/* <p>{contractor.services}</p> */}
+            <p>{contractor.services}</p>
           </div>
         ))}
     </div>
