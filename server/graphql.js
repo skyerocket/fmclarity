@@ -1,19 +1,37 @@
-// graphql.js
-
 const { ApolloServer, gql } = require('apollo-server-lambda');
 
-// Construct a schema, using GraphQL schema language
 const typeDefs = gql`
   type Query {
-    hello: String
+    contractors: [Contractor]
+  }
+
+  type Contractor {
+    name: String!
+    telephone: String!
+    email: String!
+    services: [String]!
   }
 `;
 
-// Provide resolver functions for your schema fields
+const contractors = [
+    {
+        name: 'CPB Contractors', 
+        telephone: '(03)92287700',
+        email: 'test@gmail.com',
+        services: ['serviceA', 'serviceB', 'serviceC']
+    },
+    {
+        name: 'Another One', 
+        telephone: '(03)92287700',
+        email: 'test@gmail.com',
+        services: ['WethebestMusic']
+    },
+]
+
 const resolvers = {
   Query: {
-    hello: () => 'Hello world!',
-  },
+    contractors: () => contractors,
+  }
 };
 
 const server = new ApolloServer({ typeDefs, resolvers });
